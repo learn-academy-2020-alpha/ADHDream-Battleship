@@ -1,18 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
+import logo from './logo.svg';
 import './App.css';
-import Board from './components/Board.js'
-
-class App extends Component {
-    constructor(props) {
-        super(props)
-        }
-  render() {
-    return (
-     <div>
-     <Board />
-      </div>
-    );
-  }
+import Board from './components/Board'
+function App() {
+  return (
+    <div>
+      <Board />
+    </div>
+  );
 }
-
 export default App;

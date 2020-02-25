@@ -93,11 +93,14 @@ class Board extends Component {
     return (
     <>
     <br/>
+        <h1>Tit-Tac-Toe</h1>
      <div className = "board">
         {square}
-        <button onClick = {this.resetGame}> Reset Game</button>
         <br/>
         <p>{this.state.userStatus}</p>
+      </div>
+      <div className="buttreset">
+        <button onClick = {this.resetGame}> Reset Game</button>
       </div>
       </>
     );

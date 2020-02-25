@@ -9,24 +9,33 @@ class Board extends Component {
               spaces: ["🐄", "🐄", "🐄", "🐄", "🐄", "🐄", "🐄", "🐄", "🐄"],
               answer:["🐮", "🐮", "🐮", "🐮", "🐮", "🐮", "🐮", "🐮", "🐮"],
               userStatus: "",
-              counter: 5
+              counter: 5,
+              startGame: 0,
+              symbolState: "?"
           }
     }
+
+    //handleLocation method changes the spaces 
     handleLocation = (index) => {
-         let {spaces, answer, userStatus, counter} = this.state
+         let {spaces, answer, userStatus, counter, startGame, symbolState} = this.state
          //update the value of square that you click on match the value of 'answer' array value with the same index.
+         if(startGame){
          spaces[index] = answer[index]
          this.setState({
              spaces: spaces,
              answer: answer,
              counter: --counter
          })
-         if(spaces[index] === "💉" || counter === 0){
-             this.setState({userStatus: "Your cow got METH! 🤢"})
+         if(spaces[index] === "💉"){
+             this.setState({userStatus: "You lost! Your cow got addicted to METH!! 🤢", symbolState: "💉" })
 
-         } else if(spaces[index] === "💰"){
-             this.setState({userStatus: "Your cow got MONEY 🤑"})
+         } else if(spaces[index] === "📕"){
+             this.setState({userStatus: "You won! Your cow got addicted to MATH!! 📕", symbolState: "📕"})
+         } else if(counter === 0){
+             this.setState({userStatus: "You ran out of turns!", symbolState: "???"})
          }
+         console.log(answer)
+        }
 
     }
 
@@ -39,7 +48,10 @@ class Board extends Component {
             spaces: spaces,
             answer: answer,
             counter: 5,
-            userStatus: ""
+            userStatus: "",
+            startGame: 0,
+            symbolState: "?"
+
         })
     }
 
@@ -53,11 +65,12 @@ class Board extends Component {
                 randomTreasure = Math.floor(Math.random() * spaces.length)
             }
         answer[randomBomb] = "💉"
-        answer[randomTreasure] = "💰"
+        answer[randomTreasure] = "📕"
 
         //Updating the displayed state as user plays the game
         this.setState({answer:answer})
         console.log(answer)
+        this.setState({startGame: 1})
   }
 
   render() {
@@ -77,15 +90,26 @@ class Board extends Component {
 
     return (
     <>
-    <div> Counter:{this.state.counter}</div>
     <br/>
+        <h1>M{this.state.symbolState}th Cow</h1>
      <div className = "board">
         {square}
-        <button onClick = {this.randomize}> Start Game</button>
-        <button onClick = {this.resetGame}> Reset Game</button>
+        
+        
         <br/>
-        <p>{this.state.userStatus}</p>
+        
       </div>
+      <div>
+        <p className = "status">{this.state.userStatus}</p> 
+        </div>
+            <div className = "item-center">
+
+            <button className="button" onClick = {this.randomize}> Start Game</button>
+            <button className="button" onClick = {this.resetGame}> Reset Game</button>
+        
+            <p>Counter:{this.state.counter}</p>
+            </div>
+       
       </>
     );
   }
